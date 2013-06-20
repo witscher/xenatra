@@ -1,0 +1,188 @@
+.container-fluid
+  %header
+  #main{:role => "main"}
+    .well
+      %h1 Dashboard
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th
+            %th server name
+            %th parent name
+            %th Status
+            %th by
+            %th age
+            %th Tags
+            %th Lock
+            %th 
+              %input#selectall{:type => "checkbox"}
+        %tbody
+          %tr
+            %td
+              %a.btn 
+                %i.icon-play
+                snap            
+            %td test-server1
+            %td server1
+            %td 
+              .progress.progress-success
+                .bar{:style => "width: 100%;"}
+            %td alice 
+            %td 3 days ago
+            %td 
+              %span.label Tomcat
+              %span.label.label-info app
+            %td
+              %a.btn.btn-warning
+                %i.icon-lock.icon-white 
+                lock
+            %td 
+              %input#selectall{:type => "checkbox"}
+          %tr
+            %td 
+              %a.btn 
+                %i.icon-play
+                snap
+            %td test-server2
+            %td server2
+            %td 
+              .progress.progress-danger
+                .bar{:style => "width: 35%;"}
+            %td alice 
+            %td 3 days ago
+            %td 
+              %span.label Tomcat
+              %span.label.label-info app
+            %td
+              %a.btn.btn-warning
+                %i.icon-lock.icon-white 
+                lock
+            %td
+              %input#selectall{:type => "checkbox"}
+          %tr
+            %td 
+              %a.btn.disabled 
+                %i.icon-play
+                snap
+            %td test-server3
+            %td server3
+            %td 
+              .progress.progress-striped.active
+                .bar{:style => "width: 60%;"}
+            %td lai 
+            %td less than 1 minute ago
+            %td 
+              %span.label.label-important MySQL
+              %span.label.label-info app
+            %td
+              %a.btn.btn-warning
+                %i.icon-lock.icon-white 
+                lock
+            %td
+              %input#selectall{:type => "checkbox"}
+          %tr
+            %td 
+              %a.btn.disabled 
+                %i.icon-play
+                snap
+            %td test-server4
+            %td server4
+            %td 
+              .progress.progress-warning
+                .bar{:style => "width: 100%;"}
+            %td alice 
+            %td 3 days ago
+            %td 
+              %span.label.label-important MySQL
+              %span.label Tomcat
+              %span.label.label-info app
+            %td
+              %a.btn.btn-success
+                %i.icon-lock.icon-white 
+                unlock
+            %td
+              %input#selectall{:type => "checkbox"}
+          %tr
+            %td 
+              %a.btn.disabled 
+                %i.icon-play
+                snap
+            %td test-server5
+            %td server5
+            %td 
+              .progress.progress-warning
+                .bar{:style => "width: 100%;"}
+            %td charlie 
+            %td 4 days ago
+            %td 
+              %span.label.label-important MySQL
+              %span.label Tomcat
+              %span.label.label-info app
+            %td
+              %a.btn.btn-success.disabled
+                %i.icon-lock.icon-white 
+                unlock
+            %td
+              %input#selectall{:type => "checkbox"}
+      .pull-right 
+        %a.btn 
+          %i.icon-play
+          snap
+        %a.btn.btn-warning
+          %i.icon-lock.icon-white 
+          lock
+        %a.btn.btn-success 
+          %i.icon-lock.icon-white 
+          unlock
+      Actions for selected items
+    .alert.alert-success
+      %a.close{:"data-dismiss" => "alert"} x
+      %h4.alert-heading Success!
+      %p Snapshot for test-server3 intiated.
+    .alert.alert-error
+      %a.close{:"data-dismiss" => "alert"} x
+      %h4.alert-heading Awwww!
+      %p Snapshot for test-server2 failed:
+      %p.smapp not enough karma.
+    .well
+      %h2 Log
+      %ul.unstyled
+        %li 2012-04-21 15:36:42 - alice initiated test-server2
+        %li 2012-04-20 15:36:42 - alice unlocked test-server2 
+        %li 2012-04-18 15:36:34 - bob locked test-server1 
+        %li 2012-04-18 15:36:42 - charlie initiated test-server2 
+        %li 2012-04-03 15:06:52 - charlie locked test-server4 
+        %li 2012-04-21 15:36:42 - alice initiated test-server2 
+  %footer
+
+-#
+  Javascript at the bottom for fast page loading
+  Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary
+%script{ :src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" }
+:javascript
+  window.jQuery || document.write("<script src='js/libs/jquery-1.7.1.min.js'>\x3C/script>")
+
+
+
+
+%script{ :src => "js/plugins.js" }
+%script{ :src => "js/bootstrap-collapse.js" }
+%script{ :src => "js/bootstrap-datepicker.js" }
+%script{ :src => "js/bootstrap-tooltip.js" }
+%script{ :src => "js/jquery-dateformat.js" }
+%script{ :src => "js/bootstrap-typeahead.js" }
+%script{ :src => "js/bootstrap-alert.js" }
+%script{ :src => "js/app.js" }
+:javascript
+  $(document).ready(function() {
+
+
+    $('#neuerBeleg').submit(function() {
+      $.post("/ajax/beleg", $(this).serialize(), function(data){
+      $(data).appendTo('#alertbox').delay(5000).fadeOut(800);
+      $('#neuerBeleg').each(function(){this.reset();});
+      });
+      return false;
+    });
+
+  });
